@@ -1,0 +1,9 @@
+#app .van-nav-bar {
+  background-color: #1989fa;
+}
+#app .van-nav-bar .van-icon {
+  color: white;
+}
+#app .van-nav-bar__title {
+  color: white;
+}
