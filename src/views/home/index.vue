@@ -51,5 +51,9 @@ export default {
     right: 0;
     z-index: 2;
   }
+  .van-tabs__content {
+    padding-top: 100px;
+    padding-bottom: 80px;
+  }
 }
 </style>

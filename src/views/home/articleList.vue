@@ -66,7 +66,9 @@ export default {
     return {
       list: [],
       error: false,
-      loading: false
+      loading: false,
+      // 实现翻页 1.^加一个变量 记录时间
+      timestamp: null
     };
   },
   methods: {
@@ -75,6 +77,7 @@ export default {
     // 2. 手动上拉
     onLoad() {
       console.log("翻页", this.loading);
+      console.log("this channel", this.channel);
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
       // setTimeout(() => {
@@ -93,9 +96,18 @@ export default {
       /**
        * 调用
        */
+
+      // 2^ 判断this.timestamp是否存在 如果不存在Date.now() 如果存在我们就用this.timestamp
+      let tempTime = null;
+      if (this.timestamp) {
+        tempTime = this.timestamp;
+      } else {
+        tempTime = Date.now();
+      }
+
       this.getArticle({
         channel_id: this.channel.id,
-        timestamp: Date.now()
+        timestamp: tempTime
       });
     },
     async getArticle(obj) {
@@ -105,16 +117,21 @@ export default {
       try {
         //1. 调用接口
         const res = await article(obj);
-        console.log(res.data.data, "文章列表");
-        this.list.push(...res.data.data.results);
-        // 2.调用完加载的状态
-        this.loading = false;
-        // this.finished = true;
+        console.log(res, "文章调用的返回数据res");
+        console.log(res.data.data.results, "文章列表");
+
         //3. 判断我们请求到的数据是否为空 如果是空的
         if (res.data.data.results.length === 0) {
           this.finished = true;
+          return;
         }
-        console.log(res);
+        this.timestamp = res.data.data.pre_timestamp;
+        this.list.push(...res.data.data.results);
+        console.log(this.list, "this list 内容");
+        // 2.调用完加载的状态
+
+        this.loading = false;
+        // this.finished = true;
       } catch (err) {
         console.log(err);
         this.finished = true;
@@ -126,6 +143,8 @@ export default {
 
 <style scoped lang="less">
 .meta {
+  height: 40px;
+  line-height: 40px;
   span {
     margin-right: 10px;
   }
