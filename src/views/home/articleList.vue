@@ -37,7 +37,7 @@
           -->
           <van-grid :column-num="item.cover.images.length">
             <van-grid-item v-for="(img, idx) in item.cover.images" :key="idx">
-              <van-image :src="img" />
+              <van-image lazy-load :src="img" />
             </van-grid-item>
           </van-grid>
 
@@ -45,7 +45,7 @@
           <div class="meta">
             <span>{{ item.aut_name }}</span>
             <span>{{ item.comm_count }}评论</span>
-            <span>{{ item.pubdate }}</span>
+            <span>{{ item.pubdate | rTime }}</span>
           </div>
         </div>
       </van-cell>

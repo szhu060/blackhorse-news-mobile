@@ -6,6 +6,13 @@
         <ArticleList :channel="item" />
       </van-tab>
     </van-tabs>
+    <van-cell is-link @click="showPopup">展示弹出层</van-cell>
+    <van-popup
+      v-model="showPop"
+      :style="{ width: '60%', border: '2px solid green' }"
+    >
+      <MoreAction />
+    </van-popup>
   </div>
 </template>
 
@@ -13,15 +20,19 @@
 // 2 导入
 import { myChannel } from "@/api/channel.js";
 import ArticleList from "./articleList.vue";
+// 导入moreAction组件到index.vue 1. 导入 2.注册 3. 使用并且驼峰<MoreAction />
+import MoreAction from "./moreAction.vue";
 export default {
   data() {
     return {
       activeIndex: 0,
-      channels: []
+      channels: [],
+      showPop: true
     };
   },
   components: {
-    ArticleList
+    ArticleList,
+    MoreAction
   },
   created() {
     // 1执行函数调用
@@ -37,6 +48,9 @@ export default {
       } catch (err) {
         console.log(err);
       }
+    },
+    showPopup() {
+      this.showPop = true;
     }
   }
 };
