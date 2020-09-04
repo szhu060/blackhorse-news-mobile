@@ -46,6 +46,13 @@
             <span>{{ item.aut_name }}</span>
             <span>{{ item.comm_count }}评论</span>
             <span>{{ item.pubdate | rTime }}</span>
+            <span
+              class="close"
+              @click="moreAction(item)"
+              v-if="$store.state.tokenInfo.token"
+            >
+              <van-icon name="cross"></van-icon>
+            </span>
           </div>
         </div>
       </van-cell>
@@ -136,17 +143,38 @@ export default {
         console.log(err);
         this.finished = true;
       }
+    },
+    // 用this.$emit("事件名称"); 给父组件index.vue传递个事件
+    // item这个文章的对象传递给obj参数
+    moreAction(obj) {
+      // console.log(obj,"item obj"); //obj.art_id 就是文章id
+      // .toString() -> 由于这些数据可能是经过大数处理之后的对象 所以这里要加toString
+      this.$emit("moreActionBtn", obj.art_id.toString());
     }
   }
 };
 </script>
 
 <style scoped lang="less">
+// .meta {
+//   height: 40px;
+//   line-height: 40px;
+//   span {
+//     margin-right: 10px;
+//   }
+// }
 .meta {
   height: 40px;
   line-height: 40px;
   span {
     margin-right: 10px;
+  }
+  .close {
+    // 让它在最右边
+    // 它的父级容器是flex的，给当前元素设置左外边距为auto，会让这个元素在父级容器
+    // 的最右边
+    float: right;
+    margin: 3px 5px 0 0;
   }
 }
 </style>

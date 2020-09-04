@@ -3,7 +3,7 @@
     <van-tabs v-model="activeIndex" animated swipeable>
       <van-tab v-for="item in channels" :key="item.id" :title="item.name"
         >内容 {{ item.name }}
-        <ArticleList :channel="item" />
+        <ArticleList @moreActionBtn="moreActionBtn" :channel="item" />
       </van-tab>
     </van-tabs>
     <van-cell is-link @click="showPopup">展示弹出层</van-cell>
@@ -11,7 +11,7 @@
       v-model="showPop"
       :style="{ width: '60%', border: '2px solid green' }"
     >
-      <MoreAction />
+      <MoreAction @noInterest="disLike" />
     </van-popup>
   </div>
 </template>
@@ -27,7 +27,8 @@ export default {
     return {
       activeIndex: 0,
       channels: [],
-      showPop: true
+      showPop: false, //no-display on default
+      articleIDcloseId: null //将点击关闭按钮的那篇文章的id存入这个变量
     };
   },
   components: {
@@ -51,6 +52,18 @@ export default {
     },
     showPopup() {
       this.showPop = true;
+    },
+    // 将文章id传递给id参数
+    moreActionBtn(id) {
+      this.articleIDcloseId = id;
+      //文章列表点击"x" 弹出popup id为点击那个文章的id (string)
+      // console.log(id, "wenzhang id"); 123162
+      // 显示弹出窗口
+      this.showPop = true;
+      // this.showPopup();
+    },
+    disLike() {
+      // console.log(this.articleIDcloseId,"id article dislike"); //
     }
   }
 };
