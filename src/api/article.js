@@ -11,3 +11,13 @@ export const article = obj => {
     }
   });
 };
+// 不感兴趣的接口
+export const dislikeArticle = articleId => {
+  return axiosinstance({
+    method: "POST",
+    url: "/app/v1_0/article/dislikes",
+    data: {
+      target: articleId
+    }
+  });
+};

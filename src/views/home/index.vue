@@ -22,6 +22,7 @@ import { myChannel } from "@/api/channel.js";
 import ArticleList from "./articleList.vue";
 // 导入moreAction组件到index.vue 1. 导入 2.注册 3. 使用并且驼峰<MoreAction />
 import MoreAction from "./moreAction.vue";
+import { dislikeArticle } from "@/api/article.js";
 export default {
   data() {
     return {
@@ -43,7 +44,7 @@ export default {
     async getChannel() {
       try {
         const res = await myChannel();
-        console.log(res);
+        // console.log(res);
         // 直接赋值
         this.channels = res.data.data.channels;
       } catch (err) {
@@ -62,8 +63,20 @@ export default {
       this.showPop = true;
       // this.showPopup();
     },
-    disLike() {
-      // console.log(this.articleIDcloseId,"id article dislike"); //
+    async disLike() {
+      // console.log(this.articleIDcloseId,"id article dislike"); // 成功了
+      try {
+        const res = await dislikeArticle(this.articleIDcloseId);
+        //console.log(res, "点击完了dislikebtn"); //成功执行
+        this.$toast(
+          "You don't like the article with ID" + res.data.data.target
+        );
+        // 直接赋值
+      } catch (err) {
+        console.log(err);
+        this.$toast("fail");
+      }
+      this.showPop = false;
     }
   }
 };

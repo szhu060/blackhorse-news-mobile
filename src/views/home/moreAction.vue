@@ -3,7 +3,7 @@
     <van-cell-group v-if="!isReport">
       <!-- 1. 在子组件里绑定一个click 通过$emit("起个自定义事件名字") -->
       <!-- 2. 在父级组件中接受 emit传出来的自定义事件 -->
-      <van-cell @click="$emit('noInterest')">不感兴趣</van-cell>
+      <van-cell @click="noInterest1">不感兴趣</van-cell>
       <van-cell is-link @click="isReport = true">反馈垃圾内容</van-cell>
       <van-cell>拉黑作者</van-cell>
     </van-cell-group>
@@ -26,6 +26,11 @@ export default {
     return {
       isReport: false
     };
+  },
+  methods: {
+    noInterest1() {
+      this.$emit("noInterest");
+    }
   }
 };
 </script>

@@ -124,8 +124,8 @@ export default {
       try {
         //1. 调用接口
         const res = await article(obj);
-        console.log(res, "文章调用的返回数据res");
-        console.log(res.data.data.results, "文章列表");
+        // console.log(res, "文章调用的返回数据res");
+        // console.log(res.data.data.results, "文章列表");
 
         //3. 判断我们请求到的数据是否为空 如果是空的
         if (res.data.data.results.length === 0) {
@@ -134,7 +134,7 @@ export default {
         }
         this.timestamp = res.data.data.pre_timestamp;
         this.list.push(...res.data.data.results);
-        console.log(this.list, "this list 内容");
+        // console.log(this.list, "this list 内容");
         // 2.调用完加载的状态
 
         this.loading = false;
